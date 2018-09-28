@@ -133,7 +133,7 @@ app.post('/webhook', function (req, res) {
 
     let respObj = {
         "fulfillmentText": "Hello DF SF",
-        "fulfillmentMessages": [{ "text": { "text": "N/A" } }],
+        "fulfillmentMessages": [{ "text": { "text": ["Hello DF SF-1"] } }],
         "source": ""
     }
 
