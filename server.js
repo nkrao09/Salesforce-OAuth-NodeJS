@@ -127,7 +127,17 @@ app.get('/api/accounts', function (req, res) {
 //get a list of accounts.
 app.post('/webhook', function (req, res) {
 
-    return res.sendStatus(400);
+    // return res.sendStatus(400);
+
+    res.setHeader('Content-Type', 'application/json');
+
+    let respObj = {
+        "fulfillmentText": "Hello DF SF",
+        "fulfillmentMessages": [{ "text": { "text": "N/A" } }],
+        "source": ""
+    }
+
+    return res.json(respObj);
 
     req.session.originalURLPath = req.path;
     // if auth has not been set, redirect to index
