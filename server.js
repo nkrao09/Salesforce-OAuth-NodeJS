@@ -4,7 +4,7 @@ const express = require('express');
 const jsforce = require('jsforce');
 const path = require('path');
 const session = require('express-session');
-const config = require('../DilaogFlowSF/routes/config.js');
+const config = require('./server/config');
 const bodyParser = require('body-parser');
 const util = require('util');
 
