@@ -37,6 +37,7 @@ const oauth2 = new jsforce.OAuth2({
     clientSecret: '3145900731407281741',
     //redirectUri : 'http://localhost:' + port +'/token'
     redirectUri: 'https://dialogflow-salesforce.herokuapp.com/token'
+    //redirectUri: 'https://a0c4eb42.ngrok.io/token'
 });
 
 // Serve static assets
@@ -129,6 +130,12 @@ app.post('/webhook', function (req, res) {
 
     // return res.sendStatus(400);
 
+    req.session.originalURLPath = req.path;
+    // if auth has not been set, redirect to index
+    if (!req.session.accessToken || !req.session.instanceUrl) {
+        res.redirect('/auth/login');
+    }
+
     res.setHeader('Content-Type', 'application/json');
 
     let respObj = {
@@ -139,11 +146,11 @@ app.post('/webhook', function (req, res) {
 
     return res.json(respObj);
 
-    req.session.originalURLPath = req.path;
-    // if auth has not been set, redirect to index
-    if (!req.session.accessToken || !req.session.instanceUrl) {
-        res.redirect('/auth/login');
-    }
+    // req.session.originalURLPath = req.path;
+    // // if auth has not been set, redirect to index
+    // if (!req.session.accessToken || !req.session.instanceUrl) {
+    //     res.redirect('/auth/login');
+    // }
 
     //SOQL query
     let q = 'SELECT id, name FROM account LIMIT 10';
