@@ -72,7 +72,12 @@ app.get('/token', function (req, res) {
 
         var string = encodeURIComponent('true');
         //res.redirect('http://localhost:3000/?valid=' + string);
-        res.redirect(req.session.originalURLPath);
+
+        if (req.session.originalURLPath) {
+            res.redirect(req.session.originalURLPath);
+        } else {
+            res.redirect('/?valid=' + string);
+        }
     });
 });
 
