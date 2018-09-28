@@ -45,10 +45,12 @@ const oauth2 = new jsforce.OAuth2({
 /**
 * Login endpoint
 */
-app.get("/auth/login", function (req, res) {
+app.get('/auth/login', function (req, res) {
     // Redirect to Salesforce login/authorization page
     res.redirect(oauth2.getAuthorizationUrl({ scope: 'full' }));
 });
+
+
 
 /**
 * Login callback endpoint (only called by Force.com)
@@ -87,12 +89,11 @@ app.get('/api/toExtension', function (req, res) {
 });
 
 //get a list of accounts.
-app.get('api/accounts', function (req, res) {
+app.get('/api/accounts', function (req, res) {
 
     req.session.originalURLPath = req.path;
     // if auth has not been set, redirect to index
     if (!req.session.accessToken || !req.session.instanceUrl) {
-
         res.redirect('/auth/login');
     }
 
@@ -123,7 +124,6 @@ app.get('api/accounts', function (req, res) {
         .run({ autoFetch: true, maxFetch: 4000 });
 });
 
-
 //get a list of accounts.
 app.post('/webhook', function (req, res) {
 
@@ -132,7 +132,6 @@ app.post('/webhook', function (req, res) {
     req.session.originalURLPath = req.path;
     // if auth has not been set, redirect to index
     if (!req.session.accessToken || !req.session.instanceUrl) {
-
         res.redirect('/auth/login');
     }
 
