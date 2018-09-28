@@ -36,7 +36,7 @@ const oauth2 = new jsforce.OAuth2({
     clientId: '3MVG9d8..z.hDcPI4kCLryo0GNxiRNRnCXS0ZxcLEqnqApx3B_rDPL3cD3oxUG.yrPG4_kBnsrPkBYylDshCj',
     clientSecret: '3145900731407281741',
     //redirectUri : 'http://localhost:' + port +'/token'
-    redirectUri: 'http://localhost:3030/token'
+    redirectUri: 'https://dialogflow-salesforce.herokuapp.com/token'
 });
 
 // Serve static assets
