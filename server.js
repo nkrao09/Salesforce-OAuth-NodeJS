@@ -11,12 +11,14 @@ const util = require('util');
 // Setup HTTP server
 const app = express();
 
+const PORT = process.env.PORT || 3030;
+
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(3030, function () {
-    console.log(`Server listening on port 3030!`);
+app.listen(PORT, function () {
+    console.log(`Server listening on port ${PORT}!`);
 });
 
 //initialize session
