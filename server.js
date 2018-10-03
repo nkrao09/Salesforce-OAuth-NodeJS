@@ -55,8 +55,6 @@ app.get('/auth/login', function (req, res) {
     res.redirect(oauth2.getAuthorizationUrl({ scope: 'full' }));
 });
 
-
-
 /**
 * Login callback endpoint (only called by Force.com)
 */
@@ -132,7 +130,56 @@ app.get('/api/accounts', function (req, res) {
 //get a list of accounts.
 app.post('/webhook', function (req, res) {
 
-    // return res.sendStatus(400);
+    req.session.originalURLPath = req.path;
+    // if auth has not been set, redirect to index
+    if (!req.session.accessToken || !req.session.instanceUrl) {
+        res.redirect('/auth/login');
+    }
+
+    res.setHeader('Content-Type', 'application/json');
+
+    let respObj = {
+        "fulfillmentText": "Hello DF SF",
+        "fulfillmentMessages": [{ "text": { "text": ["Hello DF SF-1"] } }],
+        "source": ""
+    }
+
+    return res.json(respObj);
+
+    // req.session.originalURLPath = req.path;
+    // // if auth has not been set, redirect to index
+    // if (!req.session.accessToken || !req.session.instanceUrl) {
+    //     res.redirect('/auth/login');
+    // }
+
+    //SOQL query
+    let q = 'SELECT id, name FROM account LIMIT 10';
+
+    //instantiate connection
+    let conn = new jsforce.Connection({
+        oauth2: { oauth2 },
+        accessToken: req.session.accessToken,
+        instanceUrl: req.session.instanceUrl
+    });
+
+    //set records array
+    let records = [];
+    let query = conn.query(q)
+        .on("record", function (record) {
+            records.push(record);
+        })
+        .on("end", function () {
+            console.log("total in database : " + query.totalSize);
+            console.log("total fetched : " + query.totalFetched);
+            res.json(records);
+        })
+        .on("error", function (err) {
+            console.error(err);
+        })
+        .run({ autoFetch: true, maxFetch: 4000 });
+});
+
+app.get('/webhook1', function (req, res) {
 
     req.session.originalURLPath = req.path;
     // if auth has not been set, redirect to index
