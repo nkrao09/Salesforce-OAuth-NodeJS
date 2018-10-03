@@ -33,6 +33,7 @@
     "redux-thunk": "2.2.0",
     "request": "2.81.0",
     "serve-favicon": "~2.4.2",
-    "universal-cookie": "2.1.0"
+    "universal-cookie": "2.1.0",
+    "unirest": "^0.5.1"
   }
 }
